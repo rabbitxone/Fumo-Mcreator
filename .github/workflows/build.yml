@@ -6,6 +6,9 @@ on:
       - "**"
   workflow_dispatch: {}
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -68,3 +71,15 @@ jobs:
           name: fumo-fabric-1.21.1
           path: build/libs/*.jar
           if-no-files-found: warn
+
+      - name: Publish jar as a release asset
+        if: success()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TAG="fabric-build-${{ github.run_number }}"
+          gh release create "$TAG" build/libs/*.jar \
+            --repo "${{ github.repository }}" \
+            --target "${{ github.sha }}" \
+            --title "Fabric 1.21.1 build #${{ github.run_number }}" \
+            --notes "Automated Fabric 1.21.1 build of commit ${{ github.sha }}."
