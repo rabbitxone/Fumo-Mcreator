@@ -3,6 +3,7 @@ package io.github.projectfumo.fumo.entity;
 import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.Items;
@@ -33,7 +34,6 @@ import io.github.projectfumo.fumo.init.FumoModEntities;
 public class RemiliaEntity extends Animal {
 	public RemiliaEntity(EntityType<RemiliaEntity> type, Level world) {
 		super(type, world);
-		setMaxUpStep(0.6f);
 		xpReward = 0;
 		setNoAi(false);
 		setPersistenceRequired();
@@ -88,8 +88,8 @@ public class RemiliaEntity extends Animal {
 		return false;
 	}
 
-	protected void dropCustomDeathLoot(DamageSource source, int looting, boolean recentlyHitIn) {
-		super.dropCustomDeathLoot(source, looting, recentlyHitIn);
+	protected void dropCustomDeathLoot(ServerLevel level, DamageSource source, boolean recentlyHitIn) {
+		super.dropCustomDeathLoot(level, source, recentlyHitIn);
 		this.spawnAtLocation(new ItemStack(FumoModItems.REMILIA_ITEM));
 	}
 
@@ -130,7 +130,7 @@ public class RemiliaEntity extends Animal {
 	}
 
 	@Override
-	public boolean ignoreExplosion() {
+	public boolean ignoreExplosion(Explosion explosion) {
 		return true;
 	}
 
@@ -152,7 +152,7 @@ public class RemiliaEntity extends Animal {
 	@Override
 	public AgeableMob getBreedOffspring(ServerLevel serverWorld, AgeableMob ageable) {
 		RemiliaEntity retval = FumoModEntities.REMILIA.create(serverWorld);
-		retval.finalizeSpawn(serverWorld, serverWorld.getCurrentDifficultyAt(retval.blockPosition()), MobSpawnType.BREEDING, null, null);
+		retval.finalizeSpawn(serverWorld, serverWorld.getCurrentDifficultyAt(retval.blockPosition()), MobSpawnType.BREEDING, null);
 		return retval;
 	}
 
@@ -166,15 +166,6 @@ public class RemiliaEntity extends Animal {
 		return world.isUnobstructed(this);
 	}
 
-	@Override
-	public boolean canBreatheUnderwater() {
-		double x = this.getX();
-		double y = this.getY();
-		double z = this.getZ();
-		Level world = this.level();
-		Entity entity = this;
-		return true;
-	}
 
 	public static void init() {
 	}
@@ -182,6 +173,7 @@ public class RemiliaEntity extends Animal {
 	public static AttributeSupplier.Builder createAttributes() {
 		AttributeSupplier.Builder builder = Mob.createMobAttributes();
 		builder = builder.add(Attributes.MOVEMENT_SPEED, 0.3);
+		builder = builder.add(Attributes.STEP_HEIGHT, 0.6);
 		builder = builder.add(Attributes.MAX_HEALTH, 2);
 		builder = builder.add(Attributes.ARMOR, 0);
 		builder = builder.add(Attributes.ATTACK_DAMAGE, 3);
