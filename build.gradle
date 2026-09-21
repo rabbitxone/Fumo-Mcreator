@@ -56,14 +56,16 @@ tasks.jar {
 
 tasks.register("printCompileClasspath") {
 	doLast {
-		println("=== compileClasspath files ===")
-		sourceSets.main.compileClasspath.files.each { println(it) }
+		println("=== compileClasspath files (size in bytes) ===")
+		sourceSets.main.compileClasspath.files.each { println("${it.length()}\t${it}") }
 		println("=== end compileClasspath files ===")
 	}
 }
 
-afterEvaluate {
-	tasks.named("compileJava") {
-		classpath = sourceSets.main.compileClasspath
+tasks.named("compileJava") {
+	doFirst {
+		println("=== compileJava actual classpath at execution time (size in bytes) ===")
+		classpath.files.each { println("${it.length()}\t${it}") }
+		println("=== end compileJava classpath ===")
 	}
 }
