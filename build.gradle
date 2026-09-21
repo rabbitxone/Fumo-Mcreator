@@ -28,7 +28,7 @@ java {
 
 tasks.withType(JavaCompile).configureEach {
 	it.options.encoding = "UTF-8"
-	it.options.release.set(21)
+	it.options.fork = true
 }
 
 processResources {
