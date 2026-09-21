@@ -1,128 +1,115 @@
-/*
- *    MCreator note: This file will be REGENERATED on each build.
- */
 package io.github.projectfumo.fumo.init;
 
-import net.minecraftforge.registries.RegistryObject;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
+import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
+import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 
-import net.minecraft.world.entity.MobCategory;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.MobCategory;
 
 import io.github.projectfumo.fumo.entity.*;
 import io.github.projectfumo.fumo.FumoMod;
 
-@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class FumoModEntities {
-	public static final DeferredRegister<EntityType<?>> REGISTRY = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, FumoMod.MODID);
-	public static final RegistryObject<EntityType<ReimuEntity>> REIMU = register("reimu",
-			EntityType.Builder.<ReimuEntity>of(ReimuEntity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(ReimuEntity::new).fireImmune().sized(0.5f, 1f));
-	public static final RegistryObject<EntityType<MarisaEntity>> MARISA = register("marisa",
-			EntityType.Builder.<MarisaEntity>of(MarisaEntity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(MarisaEntity::new).fireImmune().sized(0.5f, 1f));
-	public static final RegistryObject<EntityType<MarisaHatEntity>> MARISA_HAT = register("marisa_hat",
-			EntityType.Builder.<MarisaHatEntity>of(MarisaHatEntity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(MarisaHatEntity::new).fireImmune().sized(0.5f, 1f));
-	public static final RegistryObject<EntityType<EikiEntity>> EIKI = register("eiki",
-			EntityType.Builder.<EikiEntity>of(EikiEntity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(EikiEntity::new).fireImmune().sized(0.5f, 1f));
-	public static final RegistryObject<EntityType<CirnoEntity>> CIRNO = register("cirno",
-			EntityType.Builder.<CirnoEntity>of(CirnoEntity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(CirnoEntity::new).fireImmune().sized(0.5f, 1f));
-	public static final RegistryObject<EntityType<TanCirnoEntity>> TAN_CIRNO = register("tan_cirno",
-			EntityType.Builder.<TanCirnoEntity>of(TanCirnoEntity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(TanCirnoEntity::new).fireImmune().sized(0.5f, 1f));
-	public static final RegistryObject<EntityType<DebugFumoEntity>> DEBUG_FUMO = register("debug_fumo",
-			EntityType.Builder.<DebugFumoEntity>of(DebugFumoEntity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(DebugFumoEntity::new).fireImmune().sized(0.5f, 1f));
-	public static final RegistryObject<EntityType<ChenEntity>> CHEN = register("chen",
-			EntityType.Builder.<ChenEntity>of(ChenEntity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(ChenEntity::new).fireImmune().sized(0.5f, 1f));
-	public static final RegistryObject<EntityType<NewReimuEntity>> NEW_REIMU = register("new_reimu",
-			EntityType.Builder.<NewReimuEntity>of(NewReimuEntity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(NewReimuEntity::new).fireImmune().sized(0.5f, 1f));
-	public static final RegistryObject<EntityType<BlueReimuEntity>> BLUE_REIMU = register("blue_reimu",
-			EntityType.Builder.<BlueReimuEntity>of(BlueReimuEntity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(BlueReimuEntity::new).fireImmune().sized(0.5f, 1f));
-	public static final RegistryObject<EntityType<KoishiEntity>> KOISHI = register("koishi",
-			EntityType.Builder.<KoishiEntity>of(KoishiEntity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(KoishiEntity::new).fireImmune().sized(0.5f, 1f));
-	public static final RegistryObject<EntityType<FlandreEntity>> FLANDRE = register("flandre",
-			EntityType.Builder.<FlandreEntity>of(FlandreEntity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(FlandreEntity::new).fireImmune().sized(0.5f, 1f));
-	public static final RegistryObject<EntityType<MeilingEntity>> MEILING = register("meiling",
-			EntityType.Builder.<MeilingEntity>of(MeilingEntity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(MeilingEntity::new).fireImmune().sized(0.5f, 1f));
-	public static final RegistryObject<EntityType<YoumuEntity>> YOUMU = register("youmu",
-			EntityType.Builder.<YoumuEntity>of(YoumuEntity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(YoumuEntity::new).fireImmune().sized(0.5f, 1f));
-	public static final RegistryObject<EntityType<YuyukoEntity>> YUYUKO = register("yuyuko",
-			EntityType.Builder.<YuyukoEntity>of(YuyukoEntity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(YuyukoEntity::new).fireImmune().sized(0.5f, 1f));
-	public static final RegistryObject<EntityType<PatchouliEntity>> PATCHOULI = register("patchouli",
-			EntityType.Builder.<PatchouliEntity>of(PatchouliEntity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(PatchouliEntity::new).fireImmune().sized(0.5f, 1f));
-	public static final RegistryObject<EntityType<NitoriEntity>> NITORI = register("nitori",
-			EntityType.Builder.<NitoriEntity>of(NitoriEntity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(NitoriEntity::new).fireImmune().sized(0.5f, 1f));
-	public static final RegistryObject<EntityType<TewiEntity>> TEWI = register("tewi",
-			EntityType.Builder.<TewiEntity>of(TewiEntity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(TewiEntity::new).fireImmune().sized(0.5f, 1f));
-	public static final RegistryObject<EntityType<NazrinEntity>> NAZRIN = register("nazrin",
-			EntityType.Builder.<NazrinEntity>of(NazrinEntity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(NazrinEntity::new).fireImmune().sized(0.5f, 1f));
-	public static final RegistryObject<EntityType<SunnyMilkEntity>> SUNNY_MILK = register("sunny_milk",
-			EntityType.Builder.<SunnyMilkEntity>of(SunnyMilkEntity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(SunnyMilkEntity::new).fireImmune().sized(0.5f, 1f));
-	public static final RegistryObject<EntityType<AliceEntity>> ALICE = register("alice",
-			EntityType.Builder.<AliceEntity>of(AliceEntity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(AliceEntity::new).fireImmune().sized(0.5f, 1f));
-	public static final RegistryObject<EntityType<RemiliaEntity>> REMILIA = register("remilia",
-			EntityType.Builder.<RemiliaEntity>of(RemiliaEntity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(RemiliaEntity::new).fireImmune().sized(0.5f, 1f));
+	public static final EntityType<ReimuEntity> REIMU = register("reimu",
+			FabricEntityTypeBuilder.create(MobCategory.MONSTER, ReimuEntity::new).dimensions(EntityDimensions.scalable(0.5f, 1f)).trackRangeBlocks(64).trackedUpdateRate(3).forceTrackedVelocityUpdates(true).fireImmune());
+	public static final EntityType<MarisaEntity> MARISA = register("marisa",
+			FabricEntityTypeBuilder.create(MobCategory.MONSTER, MarisaEntity::new).dimensions(EntityDimensions.scalable(0.5f, 1f)).trackRangeBlocks(64).trackedUpdateRate(3).forceTrackedVelocityUpdates(true).fireImmune());
+	public static final EntityType<MarisaHatEntity> MARISA_HAT = register("marisa_hat",
+			FabricEntityTypeBuilder.create(MobCategory.MONSTER, MarisaHatEntity::new).dimensions(EntityDimensions.scalable(0.5f, 1f)).trackRangeBlocks(64).trackedUpdateRate(3).forceTrackedVelocityUpdates(true).fireImmune());
+	public static final EntityType<EikiEntity> EIKI = register("eiki",
+			FabricEntityTypeBuilder.create(MobCategory.MONSTER, EikiEntity::new).dimensions(EntityDimensions.scalable(0.5f, 1f)).trackRangeBlocks(64).trackedUpdateRate(3).forceTrackedVelocityUpdates(true).fireImmune());
+	public static final EntityType<CirnoEntity> CIRNO = register("cirno",
+			FabricEntityTypeBuilder.create(MobCategory.MONSTER, CirnoEntity::new).dimensions(EntityDimensions.scalable(0.5f, 1f)).trackRangeBlocks(64).trackedUpdateRate(3).forceTrackedVelocityUpdates(true).fireImmune());
+	public static final EntityType<TanCirnoEntity> TAN_CIRNO = register("tan_cirno",
+			FabricEntityTypeBuilder.create(MobCategory.MONSTER, TanCirnoEntity::new).dimensions(EntityDimensions.scalable(0.5f, 1f)).trackRangeBlocks(64).trackedUpdateRate(3).forceTrackedVelocityUpdates(true).fireImmune());
+	public static final EntityType<DebugFumoEntity> DEBUG_FUMO = register("debug_fumo",
+			FabricEntityTypeBuilder.create(MobCategory.MONSTER, DebugFumoEntity::new).dimensions(EntityDimensions.scalable(0.5f, 1f)).trackRangeBlocks(64).trackedUpdateRate(3).forceTrackedVelocityUpdates(true).fireImmune());
+	public static final EntityType<ChenEntity> CHEN = register("chen",
+			FabricEntityTypeBuilder.create(MobCategory.MONSTER, ChenEntity::new).dimensions(EntityDimensions.scalable(0.5f, 1f)).trackRangeBlocks(64).trackedUpdateRate(3).forceTrackedVelocityUpdates(true).fireImmune());
+	public static final EntityType<NewReimuEntity> NEW_REIMU = register("new_reimu",
+			FabricEntityTypeBuilder.create(MobCategory.MONSTER, NewReimuEntity::new).dimensions(EntityDimensions.scalable(0.5f, 1f)).trackRangeBlocks(64).trackedUpdateRate(3).forceTrackedVelocityUpdates(true).fireImmune());
+	public static final EntityType<BlueReimuEntity> BLUE_REIMU = register("blue_reimu",
+			FabricEntityTypeBuilder.create(MobCategory.MONSTER, BlueReimuEntity::new).dimensions(EntityDimensions.scalable(0.5f, 1f)).trackRangeBlocks(64).trackedUpdateRate(3).forceTrackedVelocityUpdates(true).fireImmune());
+	public static final EntityType<KoishiEntity> KOISHI = register("koishi",
+			FabricEntityTypeBuilder.create(MobCategory.MONSTER, KoishiEntity::new).dimensions(EntityDimensions.scalable(0.5f, 1f)).trackRangeBlocks(64).trackedUpdateRate(3).forceTrackedVelocityUpdates(true).fireImmune());
+	public static final EntityType<FlandreEntity> FLANDRE = register("flandre",
+			FabricEntityTypeBuilder.create(MobCategory.MONSTER, FlandreEntity::new).dimensions(EntityDimensions.scalable(0.5f, 1f)).trackRangeBlocks(64).trackedUpdateRate(3).forceTrackedVelocityUpdates(true).fireImmune());
+	public static final EntityType<MeilingEntity> MEILING = register("meiling",
+			FabricEntityTypeBuilder.create(MobCategory.MONSTER, MeilingEntity::new).dimensions(EntityDimensions.scalable(0.5f, 1f)).trackRangeBlocks(64).trackedUpdateRate(3).forceTrackedVelocityUpdates(true).fireImmune());
+	public static final EntityType<YoumuEntity> YOUMU = register("youmu",
+			FabricEntityTypeBuilder.create(MobCategory.MONSTER, YoumuEntity::new).dimensions(EntityDimensions.scalable(0.5f, 1f)).trackRangeBlocks(64).trackedUpdateRate(3).forceTrackedVelocityUpdates(true).fireImmune());
+	public static final EntityType<YuyukoEntity> YUYUKO = register("yuyuko",
+			FabricEntityTypeBuilder.create(MobCategory.MONSTER, YuyukoEntity::new).dimensions(EntityDimensions.scalable(0.5f, 1f)).trackRangeBlocks(64).trackedUpdateRate(3).forceTrackedVelocityUpdates(true).fireImmune());
+	public static final EntityType<PatchouliEntity> PATCHOULI = register("patchouli",
+			FabricEntityTypeBuilder.create(MobCategory.MONSTER, PatchouliEntity::new).dimensions(EntityDimensions.scalable(0.5f, 1f)).trackRangeBlocks(64).trackedUpdateRate(3).forceTrackedVelocityUpdates(true).fireImmune());
+	public static final EntityType<NitoriEntity> NITORI = register("nitori",
+			FabricEntityTypeBuilder.create(MobCategory.MONSTER, NitoriEntity::new).dimensions(EntityDimensions.scalable(0.5f, 1f)).trackRangeBlocks(64).trackedUpdateRate(3).forceTrackedVelocityUpdates(true).fireImmune());
+	public static final EntityType<TewiEntity> TEWI = register("tewi",
+			FabricEntityTypeBuilder.create(MobCategory.MONSTER, TewiEntity::new).dimensions(EntityDimensions.scalable(0.5f, 1f)).trackRangeBlocks(64).trackedUpdateRate(3).forceTrackedVelocityUpdates(true).fireImmune());
+	public static final EntityType<NazrinEntity> NAZRIN = register("nazrin",
+			FabricEntityTypeBuilder.create(MobCategory.MONSTER, NazrinEntity::new).dimensions(EntityDimensions.scalable(0.5f, 1f)).trackRangeBlocks(64).trackedUpdateRate(3).forceTrackedVelocityUpdates(true).fireImmune());
+	public static final EntityType<SunnyMilkEntity> SUNNY_MILK = register("sunny_milk",
+			FabricEntityTypeBuilder.create(MobCategory.MONSTER, SunnyMilkEntity::new).dimensions(EntityDimensions.scalable(0.5f, 1f)).trackRangeBlocks(64).trackedUpdateRate(3).forceTrackedVelocityUpdates(true).fireImmune());
+	public static final EntityType<AliceEntity> ALICE = register("alice",
+			FabricEntityTypeBuilder.create(MobCategory.MONSTER, AliceEntity::new).dimensions(EntityDimensions.scalable(0.5f, 1f)).trackRangeBlocks(64).trackedUpdateRate(3).forceTrackedVelocityUpdates(true).fireImmune());
+	public static final EntityType<RemiliaEntity> REMILIA = register("remilia",
+			FabricEntityTypeBuilder.create(MobCategory.MONSTER, RemiliaEntity::new).dimensions(EntityDimensions.scalable(0.5f, 1f)).trackRangeBlocks(64).trackedUpdateRate(3).forceTrackedVelocityUpdates(true).fireImmune());
 
-	// Start of user code block custom entities
-	// End of user code block custom entities
-	private static <T extends Entity> RegistryObject<EntityType<T>> register(String registryname, EntityType.Builder<T> entityTypeBuilder) {
-		return REGISTRY.register(registryname, () -> (EntityType<T>) entityTypeBuilder.build(registryname));
+	private static <T extends net.minecraft.world.entity.Entity> EntityType<T> register(String registryName, FabricEntityTypeBuilder<T> builder) {
+		return Registry.register(BuiltInRegistries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(FumoMod.MODID, registryName), builder.build());
 	}
 
-	@SubscribeEvent
-	public static void init(FMLCommonSetupEvent event) {
-		event.enqueueWork(() -> {
-			ReimuEntity.init();
-			MarisaEntity.init();
-			MarisaHatEntity.init();
-			EikiEntity.init();
-			CirnoEntity.init();
-			TanCirnoEntity.init();
-			DebugFumoEntity.init();
-			ChenEntity.init();
-			NewReimuEntity.init();
-			BlueReimuEntity.init();
-			KoishiEntity.init();
-			FlandreEntity.init();
-			MeilingEntity.init();
-			YoumuEntity.init();
-			YuyukoEntity.init();
-			PatchouliEntity.init();
-			NitoriEntity.init();
-			TewiEntity.init();
-			NazrinEntity.init();
-			SunnyMilkEntity.init();
-			AliceEntity.init();
-			RemiliaEntity.init();
-		});
+	public static void init() {
+		ReimuEntity.init();
+		MarisaEntity.init();
+		MarisaHatEntity.init();
+		EikiEntity.init();
+		CirnoEntity.init();
+		TanCirnoEntity.init();
+		DebugFumoEntity.init();
+		ChenEntity.init();
+		NewReimuEntity.init();
+		BlueReimuEntity.init();
+		KoishiEntity.init();
+		FlandreEntity.init();
+		MeilingEntity.init();
+		YoumuEntity.init();
+		YuyukoEntity.init();
+		PatchouliEntity.init();
+		NitoriEntity.init();
+		TewiEntity.init();
+		NazrinEntity.init();
+		SunnyMilkEntity.init();
+		AliceEntity.init();
+		RemiliaEntity.init();
 	}
 
-	@SubscribeEvent
-	public static void registerAttributes(EntityAttributeCreationEvent event) {
-		event.put(REIMU.get(), ReimuEntity.createAttributes().build());
-		event.put(MARISA.get(), MarisaEntity.createAttributes().build());
-		event.put(MARISA_HAT.get(), MarisaHatEntity.createAttributes().build());
-		event.put(EIKI.get(), EikiEntity.createAttributes().build());
-		event.put(CIRNO.get(), CirnoEntity.createAttributes().build());
-		event.put(TAN_CIRNO.get(), TanCirnoEntity.createAttributes().build());
-		event.put(DEBUG_FUMO.get(), DebugFumoEntity.createAttributes().build());
-		event.put(CHEN.get(), ChenEntity.createAttributes().build());
-		event.put(NEW_REIMU.get(), NewReimuEntity.createAttributes().build());
-		event.put(BLUE_REIMU.get(), BlueReimuEntity.createAttributes().build());
-		event.put(KOISHI.get(), KoishiEntity.createAttributes().build());
-		event.put(FLANDRE.get(), FlandreEntity.createAttributes().build());
-		event.put(MEILING.get(), MeilingEntity.createAttributes().build());
-		event.put(YOUMU.get(), YoumuEntity.createAttributes().build());
-		event.put(YUYUKO.get(), YuyukoEntity.createAttributes().build());
-		event.put(PATCHOULI.get(), PatchouliEntity.createAttributes().build());
-		event.put(NITORI.get(), NitoriEntity.createAttributes().build());
-		event.put(TEWI.get(), TewiEntity.createAttributes().build());
-		event.put(NAZRIN.get(), NazrinEntity.createAttributes().build());
-		event.put(SUNNY_MILK.get(), SunnyMilkEntity.createAttributes().build());
-		event.put(ALICE.get(), AliceEntity.createAttributes().build());
-		event.put(REMILIA.get(), RemiliaEntity.createAttributes().build());
+	public static void registerAttributes() {
+		FabricDefaultAttributeRegistry.register(REIMU, ReimuEntity.createAttributes());
+		FabricDefaultAttributeRegistry.register(MARISA, MarisaEntity.createAttributes());
+		FabricDefaultAttributeRegistry.register(MARISA_HAT, MarisaHatEntity.createAttributes());
+		FabricDefaultAttributeRegistry.register(EIKI, EikiEntity.createAttributes());
+		FabricDefaultAttributeRegistry.register(CIRNO, CirnoEntity.createAttributes());
+		FabricDefaultAttributeRegistry.register(TAN_CIRNO, TanCirnoEntity.createAttributes());
+		FabricDefaultAttributeRegistry.register(DEBUG_FUMO, DebugFumoEntity.createAttributes());
+		FabricDefaultAttributeRegistry.register(CHEN, ChenEntity.createAttributes());
+		FabricDefaultAttributeRegistry.register(NEW_REIMU, NewReimuEntity.createAttributes());
+		FabricDefaultAttributeRegistry.register(BLUE_REIMU, BlueReimuEntity.createAttributes());
+		FabricDefaultAttributeRegistry.register(KOISHI, KoishiEntity.createAttributes());
+		FabricDefaultAttributeRegistry.register(FLANDRE, FlandreEntity.createAttributes());
+		FabricDefaultAttributeRegistry.register(MEILING, MeilingEntity.createAttributes());
+		FabricDefaultAttributeRegistry.register(YOUMU, YoumuEntity.createAttributes());
+		FabricDefaultAttributeRegistry.register(YUYUKO, YuyukoEntity.createAttributes());
+		FabricDefaultAttributeRegistry.register(PATCHOULI, PatchouliEntity.createAttributes());
+		FabricDefaultAttributeRegistry.register(NITORI, NitoriEntity.createAttributes());
+		FabricDefaultAttributeRegistry.register(TEWI, TewiEntity.createAttributes());
+		FabricDefaultAttributeRegistry.register(NAZRIN, NazrinEntity.createAttributes());
+		FabricDefaultAttributeRegistry.register(SUNNY_MILK, SunnyMilkEntity.createAttributes());
+		FabricDefaultAttributeRegistry.register(ALICE, AliceEntity.createAttributes());
+		FabricDefaultAttributeRegistry.register(REMILIA, RemiliaEntity.createAttributes());
 	}
 }

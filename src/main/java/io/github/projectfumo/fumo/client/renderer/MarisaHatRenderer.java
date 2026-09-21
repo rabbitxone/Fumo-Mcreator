@@ -1,5 +1,8 @@
 package io.github.projectfumo.fumo.client.renderer;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -9,8 +12,9 @@ import io.github.projectfumo.fumo.client.model.ModelMarisaHat;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
+@Environment(EnvType.CLIENT)
 public class MarisaHatRenderer extends MobRenderer<MarisaHatEntity, ModelMarisaHat<MarisaHatEntity>> {
-	private final ResourceLocation entityTexture = new ResourceLocation("fumo:textures/entities/marisahat.png");
+	private final ResourceLocation entityTexture = ResourceLocation.fromNamespaceAndPath("fumo", "textures/entities/marisahat.png");
 
 	public MarisaHatRenderer(EntityRendererProvider.Context context) {
 		super(context, new ModelMarisaHat<MarisaHatEntity>(context.bakeLayer(ModelMarisaHat.LAYER_LOCATION)), 0.4f);

@@ -1,0 +1,77 @@
+name: Build Fabric mod
+
+on:
+  push:
+    branches:
+      - "**"
+  workflow_dispatch: {}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+
+      - name: Resolve latest Fabric versions for Minecraft 1.21.1
+        id: fabric-versions
+        run: |
+          set -e
+          MC_VERSION="1.21.1"
+
+          LOADER_VERSION=$(curl -sS https://meta.fabricmc.net/v2/versions/loader | jq -r '[.[] | select(.stable == true)][0].version // .[0].version')
+          echo "Resolved loader version: $LOADER_VERSION"
+
+          YARN_MAPPINGS=$(curl -sS "https://meta.fabricmc.net/v2/versions/yarn/${MC_VERSION}" | jq -r '[.[] | select(.stable == true)][0].version // .[0].version')
+          echo "Resolved yarn mappings: $YARN_MAPPINGS"
+
+          FABRIC_API_VERSION=$(curl -sS https://maven.fabricmc.net/net/fabricmc/fabric-api/fabric-api/maven-metadata.xml \
+            | grep -oP '(?<=<version>)[^<]+' \
+            | grep -- "+${MC_VERSION}\$" \
+            | sort -V | tail -n1 || true)
+          echo "Resolved fabric API version: $FABRIC_API_VERSION"
+
+          {
+            [ -n "$LOADER_VERSION" ] && echo "loader_version=$LOADER_VERSION"
+            [ -n "$YARN_MAPPINGS" ] && echo "yarn_mappings=$YARN_MAPPINGS"
+            [ -n "$FABRIC_API_VERSION" ] && echo "fabric_version=$FABRIC_API_VERSION"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Build
+        run: |
+          ARGS=""
+          if [ -n "${{ steps.fabric-versions.outputs.loader_version }}" ]; then
+            ARGS="$ARGS -Ploader_version=${{ steps.fabric-versions.outputs.loader_version }}"
+          fi
+          if [ -n "${{ steps.fabric-versions.outputs.yarn_mappings }}" ]; then
+            ARGS="$ARGS -Pyarn_mappings=${{ steps.fabric-versions.outputs.yarn_mappings }}"
+          fi
+          if [ -n "${{ steps.fabric-versions.outputs.fabric_version }}" ]; then
+            ARGS="$ARGS -Pfabric_version=${{ steps.fabric-versions.outputs.fabric_version }}"
+          fi
+          ./gradlew build --stacktrace $ARGS
+
+      - name: Upload built jar
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: fumo-fabric-1.21.1
+          path: build/libs/*.jar
+          if-no-files-found: warn
+
+      - name: Upload build reports on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-reports
+          path: build/reports/
+          if-no-files-found: ignore

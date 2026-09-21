@@ -1,10 +1,5 @@
 package io.github.projectfumo.fumo.entity;
 
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.network.PlayMessages;
-import net.minecraftforge.network.NetworkHooks;
-import net.minecraftforge.common.ForgeMod;
-
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.Level;
@@ -27,20 +22,14 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.util.Mth;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.network.protocol.game.ClientGamePacketListener;
-import net.minecraft.network.protocol.Packet;
 
 import io.github.projectfumo.fumo.procedures.FumoDespawnProcedure;
 import io.github.projectfumo.fumo.init.FumoModItems;
 import io.github.projectfumo.fumo.init.FumoModEntities;
 
 public class ChenEntity extends Animal {
-	public ChenEntity(PlayMessages.SpawnEntity packet, Level world) {
-		this(FumoModEntities.CHEN.get(), world);
-	}
-
 	public ChenEntity(EntityType<ChenEntity> type, Level world) {
 		super(type, world);
 		setMaxUpStep(0.6f);
@@ -83,11 +72,6 @@ public class ChenEntity extends Animal {
 	}
 
 	@Override
-	public Packet<ClientGamePacketListener> getAddEntityPacket() {
-		return NetworkHooks.getEntitySpawningPacket(this);
-	}
-
-	@Override
 	protected PathNavigation createNavigation(Level world) {
 		return new WaterBoundPathNavigation(this, world);
 	}
@@ -110,12 +94,12 @@ public class ChenEntity extends Animal {
 
 	protected void dropCustomDeathLoot(DamageSource source, int looting, boolean recentlyHitIn) {
 		super.dropCustomDeathLoot(source, looting, recentlyHitIn);
-		this.spawnAtLocation(new ItemStack(FumoModItems.CHEN_ITEM.get()));
+		this.spawnAtLocation(new ItemStack(FumoModItems.CHEN_ITEM));
 	}
 
 	@Override
 	public SoundEvent getDeathSound() {
-		return ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.wool.break"));
+		return SoundEvents.WOOL_BREAK;
 	}
 
 	@Override
@@ -171,7 +155,7 @@ public class ChenEntity extends Animal {
 
 	@Override
 	public AgeableMob getBreedOffspring(ServerLevel serverWorld, AgeableMob ageable) {
-		ChenEntity retval = FumoModEntities.CHEN.get().create(serverWorld);
+		ChenEntity retval = FumoModEntities.CHEN.create(serverWorld);
 		retval.finalizeSpawn(serverWorld, serverWorld.getCurrentDifficultyAt(retval.blockPosition()), MobSpawnType.BREEDING, null, null);
 		return retval;
 	}
@@ -208,7 +192,6 @@ public class ChenEntity extends Animal {
 		builder = builder.add(Attributes.ARMOR, 0);
 		builder = builder.add(Attributes.ATTACK_DAMAGE, 3);
 		builder = builder.add(Attributes.FOLLOW_RANGE, 16);
-		builder = builder.add(ForgeMod.SWIM_SPEED.get(), 0.3);
 		return builder;
 	}
 }

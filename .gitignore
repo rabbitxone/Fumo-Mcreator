@@ -1,25 +1,13 @@
-
-*.bat
-
+# gradle
 .gradle/
-
-.mcreator/
-
-.eclipse/
-
 build/
+out/
 
-gradle/
-
-build.gradle
-
+# IDE
+.idea/
+*.iml
+.vscode/
 run/
 
-gradlew
-
-gradle.properties
-mcreator.gradle
-settings.gradle
-settings.gradle
-*.gradle
-gradle.properties
+# OS
+.DS_Store

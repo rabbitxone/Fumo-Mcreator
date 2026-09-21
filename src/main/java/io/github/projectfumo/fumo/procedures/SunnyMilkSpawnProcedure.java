@@ -22,7 +22,7 @@ public class SunnyMilkSpawnProcedure {
 			return;
 		if ((world.getBlockState(BlockPos.containing(x, y + 1, z))).getBlock() == Blocks.AIR || (world.getBlockState(BlockPos.containing(x, y + 1, z))).getBlock() instanceof LiquidBlock) {
 			if (entity instanceof Player _player) {
-				ItemStack _stktoremove = new ItemStack(FumoModItems.SUNNY_MILK_ITEM.get());
+				ItemStack _stktoremove = new ItemStack(FumoModItems.SUNNY_MILK_ITEM);
 				_player.getInventory().clearOrCountMatchingItems(p -> _stktoremove.getItem() == p.getItem(), 1, _player.inventoryMenu.getCraftSlots());
 			}
 			if (world instanceof ServerLevel _level)

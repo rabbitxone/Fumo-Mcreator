@@ -1,0 +1,30 @@
+{
+	"schemaVersion": 1,
+	"id": "fumo",
+	"version": "${version}",
+	"name": "Fumo",
+	"description": "Adds Fumos from Touhou.",
+	"authors": [
+		"KosherKomeiji"
+	],
+	"contact": {
+		"homepage": "https://modrinth.com/mod/fumo"
+	},
+	"license": "CC-BY-NC-SA-4.0",
+	"icon": "logo.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"io.github.projectfumo.fumo.FumoMod"
+		],
+		"client": [
+			"io.github.projectfumo.fumo.FumoModClient"
+		]
+	},
+	"depends": {
+		"fabricloader": ">=0.16.0",
+		"minecraft": "~1.21.1",
+		"java": ">=21",
+		"fabric-api": "*"
+	}
+}

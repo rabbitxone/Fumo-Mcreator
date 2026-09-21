@@ -1,5 +1,8 @@
 package io.github.projectfumo.fumo.client.model;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+
 import net.minecraft.world.entity.Entity;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.client.model.geom.builders.PartDefinition;
@@ -18,10 +21,11 @@ import com.mojang.blaze3d.vertex.PoseStack;
 // Made with Blockbench 4.9.3
 // Exported for Minecraft version 1.17 or later with Mojang mappings
 // Paste this class into your mod and generate all required imports
+@Environment(EnvType.CLIENT)
 public class ModelFumo<T extends Entity> extends EntityModel<T> {
 	// This layer location should be baked with EntityRendererProvider.Context in
 	// the entity renderer and passed into this model's constructor
-	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation("fumo", "model_fumo"), "main");
+	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath("fumo", "model_fumo"), "main");
 	public final ModelPart Fumo;
 
 	public ModelFumo(ModelPart root) {

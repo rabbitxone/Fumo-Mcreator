@@ -1,20 +1,17 @@
-/*
-*	MCreator note: This file will be REGENERATED on each build.
-*/
 package io.github.projectfumo.fumo.init;
 
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.event.village.WandererTradesEvent;
-import net.minecraftforge.common.BasicItemListing;
+import net.fabricmc.fabric.api.object.builder.v1.trade.TradeOfferHelper;
 
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.trading.ItemCost;
+import net.minecraft.world.item.trading.MerchantOffer;
 
-@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.FORGE)
+import java.util.Optional;
+
 public class FumoModTrades {
-	@SubscribeEvent
-	public static void registerWanderingTrades(WandererTradesEvent event) {
-		event.getGenericTrades().add(new BasicItemListing(new ItemStack(Items.MUSIC_DISC_13), new ItemStack(Items.MUSIC_DISC_CAT), new ItemStack(FumoModItems.REIMU_ITEM.get()), 10, 5, 0.05f));
+	public static void init() {
+		TradeOfferHelper.registerWanderingTraderOffers(1,
+				factories -> factories.add((trader, random) -> new MerchantOffer(new ItemCost(Items.MUSIC_DISC_13), Optional.of(new ItemCost(Items.MUSIC_DISC_CAT)), new ItemStack(FumoModItems.REIMU_ITEM), 10, 5, 0.05f)));
 	}
 }

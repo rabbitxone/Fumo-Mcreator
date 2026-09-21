@@ -1,5 +1,8 @@
 package io.github.projectfumo.fumo.client.renderer;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -9,8 +12,9 @@ import io.github.projectfumo.fumo.client.model.ModelEiki;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
+@Environment(EnvType.CLIENT)
 public class EikiRenderer extends MobRenderer<EikiEntity, ModelEiki<EikiEntity>> {
-	private final ResourceLocation entityTexture = new ResourceLocation("fumo:textures/entities/eiki.png");
+	private final ResourceLocation entityTexture = ResourceLocation.fromNamespaceAndPath("fumo", "textures/entities/eiki.png");
 
 	public EikiRenderer(EntityRendererProvider.Context context) {
 		super(context, new ModelEiki<EikiEntity>(context.bakeLayer(ModelEiki.LAYER_LOCATION)), 0.4f);
