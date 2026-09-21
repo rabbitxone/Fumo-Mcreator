@@ -53,6 +53,8 @@ tasks.register("printCompileClasspath") {
 	}
 }
 
-tasks.named("compileJava") {
-	classpath = sourceSets.main.compileClasspath
+afterEvaluate {
+	tasks.named("compileJava") {
+		classpath = sourceSets.main.compileClasspath
+	}
 }
