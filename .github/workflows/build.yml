@@ -58,7 +58,31 @@ jobs:
           if [ -n "${{ steps.fabric-versions.outputs.fabric_version }}" ]; then
             ARGS="$ARGS -Pfabric_version=${{ steps.fabric-versions.outputs.fabric_version }}"
           fi
-          ./gradlew build --stacktrace $ARGS
+          echo "ARGS=$ARGS" >> "$GITHUB_ENV"
+
+          echo "::group::dependencies --configuration compileClasspath"
+          ./gradlew dependencies --configuration compileClasspath $ARGS | tee /tmp/deps.log || true
+          echo "::endgroup::"
+
+          ./gradlew build --stacktrace --info $ARGS 2>&1 | tee /tmp/full-build.log
+          RESULT=${PIPESTATUS[0]}
+
+          echo "::group::grepped diagnostics (minecraft/loom/mapping mentions)"
+          grep -iE "minecraft|mapping|intermediary|loom|piston|merged jar|compileClasspath" /tmp/full-build.log | grep -viE "does not exist|cannot find symbol|Fumo-Mcreator/src" | head -200 || true
+          echo "::endgroup::"
+
+          exit $RESULT
+
+      - name: Upload build reports on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-reports
+          path: |
+            build/reports/
+            /tmp/full-build.log
+            /tmp/deps.log
+          if-no-files-found: ignore
 
       - name: Upload built jar
         if: always()
@@ -67,11 +91,3 @@ jobs:
           name: fumo-fabric-1.21.1
           path: build/libs/*.jar
           if-no-files-found: warn
-
-      - name: Upload build reports on failure
-        if: failure()
-        uses: actions/upload-artifact@v4
-        with:
-          name: build-reports
-          path: build/reports/
-          if-no-files-found: ignore
