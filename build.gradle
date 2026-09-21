@@ -52,3 +52,7 @@ tasks.register("printCompileClasspath") {
 		println("=== end compileClasspath files ===")
 	}
 }
+
+tasks.named("compileJava") {
+	classpath = sourceSets.main.compileClasspath
+}
