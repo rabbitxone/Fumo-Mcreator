@@ -10,7 +10,7 @@ import net.minecraft.world.entity.LivingEntity;
 
 public class ReimuIconItem extends Item {
 	public ReimuIconItem() {
-		super(new Item.Properties().food((new FoodProperties.Builder()).nutrition(0).saturationModifier(0f).alwaysEat().build()));
+		super(new Item.Properties().food((new FoodProperties.Builder()).nutrition(0).saturationModifier(0f).alwaysEdible().build()));
 	}
 
 	@Override
