@@ -48,7 +48,7 @@ jobs:
 
       - name: Build
         run: |
-          ARGS=""
+          ARGS="--no-daemon"
           if [ -n "${{ steps.fabric-versions.outputs.loader_version }}" ]; then
             ARGS="$ARGS -Ploader_version=${{ steps.fabric-versions.outputs.loader_version }}"
           fi
@@ -60,8 +60,8 @@ jobs:
           fi
           echo "ARGS=$ARGS" >> "$GITHUB_ENV"
 
-          echo "::group::dependencies --configuration compileClasspath"
-          ./gradlew dependencies --configuration compileClasspath $ARGS | tee /tmp/deps.log || true
+          echo "::group::printCompileClasspath (isolated, no daemon)"
+          ./gradlew printCompileClasspath $ARGS | tee /tmp/classpath.log || true
           echo "::endgroup::"
 
           ./gradlew build --stacktrace --info $ARGS 2>&1 | tee /tmp/full-build.log
@@ -81,7 +81,7 @@ jobs:
           path: |
             build/reports/
             /tmp/full-build.log
-            /tmp/deps.log
+            /tmp/classpath.log
           if-no-files-found: ignore
 
       - name: Upload built jar

@@ -44,3 +44,11 @@ tasks.jar {
 		rename { "LICENSE_fumo.txt" }
 	}
 }
+
+tasks.register("printCompileClasspath") {
+	doLast {
+		println("=== compileClasspath files ===")
+		sourceSets.main.compileClasspath.files.each { println(it) }
+		println("=== end compileClasspath files ===")
+	}
+}
