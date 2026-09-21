@@ -64,6 +64,20 @@ jobs:
           ./gradlew printCompileClasspath $ARGS | tee /tmp/classpath.log || true
           echo "::endgroup::"
 
+          echo "::group::inspect minecraft-merged jar contents"
+          MC_JAR=$(find .gradle/loom-cache/minecraftMaven -name "minecraft-merged-*.jar" 2>/dev/null | head -n1)
+          echo "Minecraft merged jar: $MC_JAR"
+          if [ -n "$MC_JAR" ]; then
+            ls -la "$MC_JAR"
+            echo "--- entry count ---"
+            unzip -l "$MC_JAR" | tail -n5
+            echo "--- sample entries matching 'world/level' or 'class_' ---"
+            unzip -l "$MC_JAR" | grep -E "world/level/Level\.class|class_[0-9]+\.class" | head -n20
+          else
+            echo "No minecraft-merged jar found under .gradle/loom-cache yet"
+          fi
+          echo "::endgroup::"
+
           ./gradlew build --stacktrace --info $ARGS 2>&1 | tee /tmp/full-build.log
           RESULT=${PIPESTATUS[0]}
 
