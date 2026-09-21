@@ -35,7 +35,7 @@ public class FumoModTabs {
 				tabData.accept(FumoModItems.SUNNY_MILK_ITEM);
 				tabData.accept(FumoModItems.ALICE_ITEM);
 				tabData.accept(FumoModItems.REMILIA_ITEM);
-			}).withSearchBar().build());
+			}).build());
 
 	public static void init() {
 	}
