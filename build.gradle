@@ -37,7 +37,6 @@ java {
 
 tasks.withType(JavaCompile).configureEach {
 	it.options.encoding = "UTF-8"
-	it.options.fork = true
 }
 
 processResources {
@@ -51,21 +50,5 @@ processResources {
 tasks.jar {
 	from("License.txt") {
 		rename { "LICENSE_fumo.txt" }
-	}
-}
-
-tasks.register("printCompileClasspath") {
-	doLast {
-		println("=== compileClasspath files (size in bytes) ===")
-		sourceSets.main.compileClasspath.files.each { println("${it.length()}\t${it}") }
-		println("=== end compileClasspath files ===")
-	}
-}
-
-tasks.named("compileJava") {
-	doFirst {
-		println("=== compileJava actual classpath at execution time (size in bytes) ===")
-		classpath.files.each { println("${it.length()}\t${it}") }
-		println("=== end compileJava classpath ===")
 	}
 }

@@ -28,9 +28,6 @@ jobs:
           LOADER_VERSION=$(curl -sS https://meta.fabricmc.net/v2/versions/loader | jq -r '[.[] | select(.stable == true)][0].version // .[0].version')
           echo "Resolved loader version: $LOADER_VERSION"
 
-          YARN_MAPPINGS=$(curl -sS "https://meta.fabricmc.net/v2/versions/yarn/${MC_VERSION}" | jq -r '[.[] | select(.stable == true)][0].version // .[0].version')
-          echo "Resolved yarn mappings: $YARN_MAPPINGS"
-
           FABRIC_API_VERSION=$(curl -sS https://maven.fabricmc.net/net/fabricmc/fabric-api/fabric-api/maven-metadata.xml \
             | grep -oP '(?<=<version>)[^<]+' \
             | grep -- "+${MC_VERSION}\$" \
@@ -39,7 +36,6 @@ jobs:
 
           {
             [ -n "$LOADER_VERSION" ] && echo "loader_version=$LOADER_VERSION"
-            [ -n "$YARN_MAPPINGS" ] && echo "yarn_mappings=$YARN_MAPPINGS"
             [ -n "$FABRIC_API_VERSION" ] && echo "fabric_version=$FABRIC_API_VERSION"
           } >> "$GITHUB_OUTPUT"
 
@@ -48,54 +44,21 @@ jobs:
 
       - name: Build
         run: |
-          ARGS="--no-daemon"
+          ARGS=""
           if [ -n "${{ steps.fabric-versions.outputs.loader_version }}" ]; then
             ARGS="$ARGS -Ploader_version=${{ steps.fabric-versions.outputs.loader_version }}"
-          fi
-          if [ -n "${{ steps.fabric-versions.outputs.yarn_mappings }}" ]; then
-            ARGS="$ARGS -Pyarn_mappings=${{ steps.fabric-versions.outputs.yarn_mappings }}"
           fi
           if [ -n "${{ steps.fabric-versions.outputs.fabric_version }}" ]; then
             ARGS="$ARGS -Pfabric_version=${{ steps.fabric-versions.outputs.fabric_version }}"
           fi
-          echo "ARGS=$ARGS" >> "$GITHUB_ENV"
-
-          echo "::group::printCompileClasspath (isolated, no daemon)"
-          ./gradlew printCompileClasspath $ARGS | tee /tmp/classpath.log || true
-          echo "::endgroup::"
-
-          echo "::group::inspect minecraft-merged jar contents"
-          MC_JAR=$(find .gradle/loom-cache/minecraftMaven -name "minecraft-merged-*.jar" 2>/dev/null | head -n1)
-          echo "Minecraft merged jar: $MC_JAR"
-          if [ -n "$MC_JAR" ]; then
-            ls -la "$MC_JAR"
-            echo "--- entry count ---"
-            unzip -l "$MC_JAR" | tail -n5
-            echo "--- sample entries matching 'world/level' or 'class_' ---"
-            unzip -l "$MC_JAR" | grep -E "world/level/Level\.class|class_[0-9]+\.class" | head -n20
-          else
-            echo "No minecraft-merged jar found under .gradle/loom-cache yet"
-          fi
-          echo "::endgroup::"
-
-          ./gradlew build --stacktrace --info $ARGS 2>&1 | tee /tmp/full-build.log
-          RESULT=${PIPESTATUS[0]}
-
-          echo "::group::grepped diagnostics (minecraft/loom/mapping mentions)"
-          grep -iE "minecraft|mapping|intermediary|loom|piston|merged jar|compileClasspath" /tmp/full-build.log | grep -viE "does not exist|cannot find symbol|Fumo-Mcreator/src" | head -200 || true
-          echo "::endgroup::"
-
-          exit $RESULT
+          ./gradlew build --stacktrace $ARGS
 
       - name: Upload build reports on failure
         if: failure()
         uses: actions/upload-artifact@v4
         with:
           name: build-reports
-          path: |
-            build/reports/
-            /tmp/full-build.log
-            /tmp/classpath.log
+          path: build/reports/
           if-no-files-found: ignore
 
       - name: Upload built jar

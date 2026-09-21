@@ -1,6 +1,6 @@
 package io.github.projectfumo.fumo.entity;
 
-import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.Level;
@@ -37,7 +37,7 @@ public class YoumuEntity extends Animal {
 		xpReward = 0;
 		setNoAi(false);
 		setPersistenceRequired();
-		this.setPathfindingMalus(BlockPathTypes.WATER, 0);
+		this.setPathfindingMalus(PathType.WATER, 0);
 		this.moveControl = new MoveControl(this) {
 			@Override
 			public void tick() {
@@ -81,11 +81,6 @@ public class YoumuEntity extends Animal {
 	protected void registerGoals() {
 		super.registerGoals();
 
-	}
-
-	@Override
-	public MobType getMobType() {
-		return MobType.UNDEFINED;
 	}
 
 	@Override
